@@ -1,25 +1,85 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useForm } from "react-hook-form";
+import "./styles.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let resultDisplay;
+
+export default function App() {
+
+  function generatePassword(length,symbols) {
+    let charset = "",
+    retVal = "";
+    if(symbols){
+      charset = "!@#$%^&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      while(true){
+
+        for (var i = 0, n = charset.length; i < length; ++i) {
+          retVal += charset.charAt(Math.floor(Math.random() * n));
+        }
+        if((retVal.includes("!") || retVal.includes("@") || retVal.includes("#") ||
+              retVal.includes("$") || retVal.includes("%") || retVal.includes("^") ||
+              retVal.includes("&"))){
+                break;
+
+        }else{
+          retVal = "";
+
+        }
+      }
+
+    }else{
+      charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      for ( i = 0, n = charset.length; i < length; ++i) {
+          retVal += charset.charAt(Math.floor(Math.random() * n));
+      }
+    }
+
+    console.log(retVal);
+    return retVal;
 }
 
-export default App;
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = data => {
+    console.log(data.digits);
+    resultDisplay = generatePassword(data.digits, data.specialCharacter);
+    //alert(JSON.stringify(data));
+    console.log(resultDisplay);
+  };
+  const intialValues = {
+    firstName: "10",
+  };
+
+  return (
+<div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="digits">How many digits</label>
+      <input
+        defaultValue={intialValues.firstName}
+        name="digits"
+        placeholder="12"
+        ref={register}
+      />
+
+
+      <div className="checkboxDis">
+      <label htmlFor="specialCharacter">
+      <input className = "myCheckbox"
+        type="checkbox"
+        name="specialCharacter"
+        value="true"
+        ref={register}
+      />
+
+      Use !@#$%^&</label>
+      </div>
+
+      <input type="submit" />
+    </form>
+    <br></br>
+    <h1>{resultDisplay}</h1>
+    <h5>  ✝︎ ART-Project © Copyright 2020</h5>
+
+</div>
+  );
+}
