@@ -47,7 +47,7 @@ export default function App() {
     console.log(resultDisplay);
   };
   const intialValues = {
-    firstName: "10",
+    firstName: "16",
   };
 
   return (
@@ -57,7 +57,7 @@ export default function App() {
       <input
         defaultValue={intialValues.firstName}
         name="digits"
-        placeholder="12"
+        placeholder="Ex. 12"
         ref={register}
       />
 
