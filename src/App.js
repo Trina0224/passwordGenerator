@@ -53,7 +53,7 @@ export default function App() {
   return (
 <div>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="digits">How many digits</label>
+      <label htmlFor="digits">How many digits you would like to generate from your local computer</label>
       <input
         defaultValue={intialValues.firstName}
         name="digits"
